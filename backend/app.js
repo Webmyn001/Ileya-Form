@@ -15,12 +15,16 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/api', async (req, res, next) => {
-  const db = await connectDB().catch(e => {
-    console.error('DB connection failed:', e.message);
-    return null;
-  });
-  if (!db && req.path.startsWith('/form')) {
-    return res.status(503).json({ message: 'Service unavailable — database not connected' });
+  if (!req.path.startsWith('/form')) return next();
+  try {
+    await connectDB();
+  } catch (err) {
+    return res.status(503).json({
+      error: 'Database unavailable',
+      message: process.env.MONGODB_URI
+        ? 'Could not connect to database. Please try again.'
+        : 'Server not fully configured. Contact admin.',
+    });
   }
   next();
 });
