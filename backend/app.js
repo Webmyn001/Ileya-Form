@@ -14,20 +14,8 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.use('/api', async (req, res, next) => {
-  if (!req.path.startsWith('/form')) return next();
-  try {
-    await connectDB();
-  } catch (err) {
-    return res.status(503).json({
-      error: 'Database unavailable',
-      message: process.env.MONGODB_URI
-        ? 'Could not connect to database. Please try again.'
-        : 'Server not fully configured. Contact admin.',
-    });
-  }
-  next();
-});
+// Non-blocking DB connection — start connecting but don't block the request
+connectDB().catch(e => console.error('DB connect error:', e.message));
 
 app.use('/api/form', ileyafo);
 
