@@ -9,6 +9,7 @@ import Header from './Ileya/Client/Header';
 import Form from './Ileya/Client/Form';
 
 import AdminLogin from './pages/AdminLogin';
+import NotFound from './pages/NotFound';
 import AdminNavbar from './Ileya/Admin/header/Navbar';
 import AdminDashboard from './Ileya/Admin/Admin';
 import AdminDetails from './Ileya/Admin/Details';
@@ -57,6 +58,7 @@ function AppContent() {
             </div>
           </ProtectedRoute>
         } />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     );
   }
@@ -97,6 +99,15 @@ function AppContent() {
               transition={{ duration: 0.5 }}
             >
               <Form />
+            </motion.div>
+          } />
+          <Route path="*" element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <NotFound />
             </motion.div>
           } />
         </Routes>

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Form from './Form';
-import { IoHome } from 'react-icons/io5';
-import { FaFileCirclePlus } from 'react-icons/fa6';
 import { CiMail } from 'react-icons/ci';
 import { BsFillTelephoneInboundFill, BsArrowRight } from 'react-icons/bs';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -159,6 +157,9 @@ function Home() {
               <h2 className="text-xl sm:text-2xl font-bold text-[#1a2744]">For More Inquiries</h2>
               <p className="text-[#6b7280] text-sm mt-1">Reach out via any of the channels below</p>
               <div className="mt-6 space-y-3">
+                <a href="https://wa.me/2347064989803?text=Hello%20I%20want%20to%20make%20enquiry%20about%20the%20platform" target="_blank" rel="noopener noreferrer">
+                  <ContactItem icon={<FaWhatsapp />} text="Chat with us on WhatsApp" />
+                </a>
                 <ContactItem icon={<BsFillTelephoneInboundFill />} text="07064989893" />
                 <ContactItem icon={<BsFillTelephoneInboundFill />} text="09122251064" />
                 <ContactItem icon={<BsFillTelephoneInboundFill />} text="07055291690" />
@@ -183,29 +184,6 @@ function Home() {
           </div>
         </motion.div>
       </section>
-
-      {/* BOTTOM NAV */}
-      <div className="fixed bottom-5 left-0 right-0 z-50 px-5">
-        <div className="flex justify-center">
-          <div className="bg-white/90 backdrop-blur-xl border border-[#1a2744]/10 flex items-center justify-between rounded-full shadow-2xl shadow-black/10 px-5 py-2.5 w-full max-w-[280px] sm:max-w-sm mx-auto">
-            <button
-              className={`p-2.5 rounded-full transition-all duration-300 ${!open ? 'bg-[#1a2744] text-white shadow-lg shadow-[#1a2744]/20' : 'text-[#6b7280] hover:text-[#1a2744] hover:bg-[#1a2744]/5'}`}
-              onClick={() => setOpen(false)}
-              aria-label="Home"
-            >
-              <IoHome className="text-xl" />
-            </button>
-            <span className="text-xs font-medium text-[#6b7280] select-none">{open ? 'Close Form' : 'Open Form'}</span>
-            <button
-              className={`p-2.5 rounded-full transition-all duration-300 ${open ? 'bg-[#1a2744] text-white shadow-lg shadow-[#1a2744]/20' : 'text-[#6b7280] hover:text-[#1a2744] hover:bg-[#1a2744]/5'}`}
-              onClick={() => setOpen(!open)}
-              aria-label="Toggle form"
-            >
-              <FaFileCirclePlus className="text-xl" />
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* FORM MODAL */}
       <AnimatePresence>
