@@ -8,11 +8,6 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const navLinks = [
-    { to: '/', label: 'Home' },
-    { to: '/form', label: 'Join Now' },
-  ];
-
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-[#1a2744]/10">
@@ -33,29 +28,29 @@ function Header() {
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center space-x-1">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.to;
-                return (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                      isActive
-                        ? 'text-[#1a2744] bg-[#1a2744]/5'
-                        : 'text-[#6b7280] hover:text-[#1a2744] hover:bg-[#1a2744]/5'
-                    }`}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeNav"
-                        className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-[#c9a84c] to-[#a8882e] rounded-full"
-                      />
-                    )}
-                  </Link>
-                );
-              })}
+            <nav className="hidden md:flex flex-1 items-center justify-center gap-3">
+              <Link
+                to="/"
+                className={`relative px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  location.pathname === '/'
+                    ? 'text-[#1a2744] bg-[#1a2744]/5'
+                    : 'text-[#6b7280] hover:text-[#1a2744] hover:bg-[#1a2744]/5'
+                }`}
+              >
+                Home
+                {location.pathname === '/' && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-to-r from-[#c9a84c] to-[#a8882e] rounded-full"
+                  />
+                )}
+              </Link>
+              <Link
+                to="/form"
+                className="px-5 py-2 text-sm font-bold rounded-lg bg-gradient-to-r from-[#1a2744] to-[#0f1a2e] text-white shadow-lg shadow-[#1a2744]/20 hover:shadow-xl hover:shadow-[#1a2744]/30 hover:-translate-y-0.5 transition-all duration-300"
+              >
+                Join Now
+              </Link>
             </nav>
 
             <button
@@ -78,16 +73,20 @@ function Header() {
             className="fixed top-16 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-b border-[#1a2744]/10 shadow-lg"
           >
             <div className="flex flex-col p-4 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3 rounded-xl text-sm font-medium text-[#1a2744] hover:bg-[#1a2744]/5 transition-all"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link
+                to="/"
+                onClick={() => setIsMenuOpen(false)}
+                className="px-4 py-3 rounded-xl text-sm font-medium text-[#1a2744] hover:bg-[#1a2744]/5 transition-all"
+              >
+                Home
+              </Link>
+              <Link
+                to="/form"
+                onClick={() => setIsMenuOpen(false)}
+                className="px-4 py-3 rounded-xl text-sm font-bold bg-gradient-to-r from-[#1a2744] to-[#0f1a2e] text-white shadow-lg text-center transition-all"
+              >
+                Join Now
+              </Link>
             </div>
           </motion.div>
         )}

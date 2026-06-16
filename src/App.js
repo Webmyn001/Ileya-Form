@@ -43,7 +43,7 @@ function AppContent() {
         <Route path="/ileya" element={<AdminLogin />} />
         <Route path="/ileya/admin" element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-[#faf6f0]">
+            <div className="min-h-screen bg-[#faf6f0] pt-16">
               <AdminNavbar />
               <AdminDashboard FormData={FormData} loading={adminLoading} />
             </div>
@@ -51,7 +51,7 @@ function AppContent() {
         } />
         <Route path="/ileya/admin/details/:id" element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-[#faf6f0]">
+            <div className="min-h-screen bg-[#faf6f0] pt-16">
               <AdminNavbar />
               <AdminDetails />
             </div>

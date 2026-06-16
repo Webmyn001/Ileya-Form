@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {
   FiUser, FiHome, FiPhone, FiCreditCard,
-  FiUserPlus, FiHeart, FiTrash2, FiArrowLeft, FiShield
+  FiUserPlus, FiHeart, FiTrash2, FiArrowLeft, FiShield, FiCalendar
 } from 'react-icons/fi';
 import { API } from '../../api';
 import { motion } from 'framer-motion';
@@ -30,35 +30,59 @@ function Details() {
   };
 
   const Section = ({ title, icon, children }) => (
-    <div className="bg-white rounded-xl border border-[#1a2744]/5 p-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-xl shadow-sm border border-[#1a2744]/5 p-6 hover:shadow-md transition-shadow"
+    >
       <h3 className="text-sm font-bold text-[#1a2744] uppercase tracking-wider mb-5 flex items-center gap-3">
         <span className="text-[#c9a84c]">{icon}</span>
         {title}
       </h3>
       <div className="space-y-4">{children}</div>
-    </div>
+    </motion.div>
   );
 
   const Field = ({ icon, label, value }) => (
-    <div className="flex items-start gap-3">
+    <motion.div
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="flex items-start gap-3"
+    >
       <div className="w-9 h-9 bg-[#faf6f0] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
         <span className="text-[#6b7280]">{icon}</span>
       </div>
       <div>
         <p className="text-xs text-[#6b7280] font-medium">{label}</p>
-        <p className="text-sm font-medium text-[#1a2744] mt-0.5">{value}</p>
+        <p className="text-sm font-medium text-[#1a2744] mt-0.5">{value || '—'}</p>
       </div>
-    </div>
+    </motion.div>
   );
+
+  if (!data) {
+    return (
+      <div className="p-4 md:p-8 max-w-4xl mx-auto">
+        <div className="text-center py-20">
+          <FiUser className="text-4xl text-[#6b7280] mx-auto mb-4" />
+          <h2 className="text-lg font-medium text-[#1a2744]">No member data found</h2>
+          <button onClick={() => navigate('/ileya/admin')} className="mt-4 text-sm text-[#c9a84c] font-medium hover:underline">
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 md:p-8 max-w-4xl mx-auto">
-      <button
+      <motion.button
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-sm font-medium text-[#6b7280] hover:text-[#1a2744] transition-colors mb-6"
       >
         <FiArrowLeft /> Back to list
-      </button>
+      </motion.button>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -67,16 +91,23 @@ function Details() {
         className="bg-gradient-to-br from-[#1a2744] to-[#0f1a2e] rounded-2xl p-6 sm:p-8 mb-6 relative overflow-hidden"
       >
         <div className="absolute top-0 right-0 w-48 h-48 bg-[#c9a84c]/5 rounded-full -mr-16 -mt-16" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#c9a84c]/[0.03] rounded-full -ml-12 -mb-12" />
         <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <div className="w-20 h-20 bg-[#faf6f0]/10 backdrop-blur-sm rounded-2xl border border-[#c9a84c]/20 flex items-center justify-center flex-shrink-0">
             <FiUser className="text-3xl text-[#c9a84c]" />
           </div>
-          <div className="text-center sm:text-left">
+          <div className="text-center sm:text-left flex-1">
             <h1 className="text-2xl font-bold text-white">{data.Name}</h1>
-            <span className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 bg-green-500/10 text-green-400 text-xs font-medium rounded-full border border-green-500/20">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full" />
-              Verified Member
-            </span>
+            <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/10 text-green-400 text-xs font-medium rounded-full border border-green-500/20">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                Verified Member
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#c9a84c]/10 text-[#c9a84c] text-xs font-medium rounded-full border border-[#c9a84c]/20">
+                <FiCalendar className="text-xs" />
+                1448AH
+              </span>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -106,6 +137,8 @@ function Details() {
 
       <div className="mt-6 flex justify-end">
         <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setShowDeleteModal(true)}
@@ -116,7 +149,7 @@ function Details() {
       </div>
 
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}

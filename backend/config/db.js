@@ -16,7 +16,11 @@ const connectDB = async () => {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(uri).then((m) => m);
+    cached.promise = mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 30000,
+    }).then((m) => m);
   }
 
   cached.conn = await cached.promise;

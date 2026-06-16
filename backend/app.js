@@ -14,6 +14,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.use('/api', async (req, res, next) => {
+  const db = await connectDB().catch(e => {
+    console.error('DB connection failed:', e.message);
+    return null;
+  });
+  if (!db && req.path.startsWith('/form')) {
+    return res.status(503).json({ message: 'Service unavailable — database not connected' });
+  }
+  next();
+});
+
 app.use('/api/form', ileyafo);
 
 app.get('/api/health', (req, res) => {
@@ -29,7 +40,5 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorHandler);
-
-connectDB().catch(err => console.error('MongoDB connection skipped:', err.message));
 
 module.exports = app;

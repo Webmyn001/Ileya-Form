@@ -18,33 +18,45 @@ function Navlinks(props) {
     <>
       {Links.map((link, i) => {
         const isActive = location.pathname === link.link;
+        const isLogout = link.name === "Logout";
         return (
-          <div key={i}>
-            <li
-              className={`list-none text-sm font-medium tracking-wide transition-all duration-200
-                ${link.name === "Logout"
-                  ? "text-red-500 hover:text-red-600"
-                  : isActive
-                    ? "text-[#1a2744] font-semibold"
-                    : "text-[#6b7280] hover:text-[#1a2744]"
-                }
-                ${props.alternative ? "py-2 px-3 rounded-lg hover:bg-[#faf6f0]" : "pb-1 border-b-2 border-transparent hover:border-[#1a2744]"}
-              `}
+          <li
+            key={i}
+            className={`list-none text-sm font-medium tracking-wide transition-all duration-200
+              ${props.alternative
+                ? "py-3 px-4 rounded-xl flex items-center"
+                : "flex items-center"
+              }
+              ${
+                props.alternative
+                  ? isLogout
+                    ? "text-red-500 hover:text-red-600 hover:bg-red-50"
+                    : isActive
+                      ? "text-[#1a2744] bg-[#faf6f0] font-semibold"
+                      : "text-[#6b7280] hover:text-[#1a2744] hover:bg-[#faf6f0]"
+                  : isLogout
+                    ? "text-red-500 hover:text-red-600"
+                    : isActive
+                      ? "text-[#1a2744] font-semibold"
+                      : "text-[#6b7280] hover:text-[#1a2744]"
+              }
+              ${!props.alternative && !isLogout && isActive
+                ? "border-b-2 border-[#c9a84c]"
+                : !props.alternative && "border-b-2 border-transparent hover:border-[#1a2744]"
+              }
+            `}
+          >
+            <Link
+              to={link.link}
+              className={`w-full ${props.alternative ? "block" : ""}`}
               onClick={() => {
-                if (link.name === "Logout") handleLogout();
+                if (isLogout) handleLogout();
                 if (props.handleClick) props.handleClick();
               }}
             >
-              <Link
-                to={link.link}
-                onClick={() => {
-                  if (link.name === "Logout") handleLogout();
-                }}
-              >
-                {link.name}
-              </Link>
-            </li>
-          </div>
+              {link.name}
+            </Link>
+          </li>
         );
       })}
     </>

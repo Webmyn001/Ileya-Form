@@ -12,7 +12,7 @@ import {FaBars,FaTimes} from "react-icons/fa"
      const handleClick = () => { setOpen(!open)}
     return(
         <div>
-          <div className="bg-white/80 backdrop-blur-xl border-b border-[#1a2744]/10 flex items-center h-16 px-4 sm:px-6">
+          <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-[#1a2744]/10 flex items-center h-16 px-4 sm:px-6">
             <Link to="/ileya/admin">
               <img src={image1} alt="logo" className="h-10 w-10 object-cover rounded-lg border border-[#1a2744]/20" />
             </Link>
@@ -21,9 +21,16 @@ import {FaBars,FaTimes} from "react-icons/fa"
               <Navlinks />
             </ul>
 
-            <ul className={`md:hidden fixed top-0 z-30 bg-white/95 backdrop-blur-xl w-[55%] max-w-xs h-auto right-0 shadow-2xl
-              flex flex-col gap-4 p-6 pt-20 rounded-bl-2xl ease-in-out duration-300 border-l border-b border-[#1a2744]/10
-              ${open ? "top-0" : "top-[-150%]"}`}>
+            {open && (
+              <div
+                className="fixed inset-0 bg-black/40 z-30 md:hidden"
+                onClick={() => setOpen(false)}
+              />
+            )}
+
+            <ul className={`md:hidden fixed top-0 z-40 bg-white/95 backdrop-blur-xl w-64 max-w-[75vw] h-full right-0 shadow-2xl
+              flex flex-col gap-2 p-6 pt-20 ease-in-out duration-300 border-l border-[#1a2744]/10
+              ${open ? "translate-x-0" : "translate-x-full"}`}>
               <Navlinks alternative={true} handleClick={handleClick} />
             </ul>
 
