@@ -1,5 +1,5 @@
 const DEV_API = 'http://localhost:5000';
-const PROD_API = '';
+const PROD_API = 'https://ileya-backend.vercel.app';
 
 const API_BASE = process.env.REACT_APP_API_URL
   || (process.env.NODE_ENV === 'production' ? PROD_API : DEV_API);

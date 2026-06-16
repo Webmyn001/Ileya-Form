@@ -11,7 +11,6 @@ function Header() {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/form', label: 'Join Now' },
-    { to: '/ileya', label: 'Admin', highlight: true },
   ];
 
   return (
@@ -37,15 +36,7 @@ function Header() {
             <nav className="hidden md:flex items-center space-x-1">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
-                return link.highlight ? (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className="ml-3 px-5 py-2 bg-gradient-to-r from-[#1a2744] to-[#0f1a2e] text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg hover:from-[#0f1a2e] hover:to-[#1a2744] transition-all duration-300"
-                  >
-                    {link.label}
-                  </Link>
-                ) : (
+                return (
                   <Link
                     key={link.to}
                     to={link.to}
@@ -92,11 +83,7 @@ function Header() {
                   key={link.to}
                   to={link.to}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                    link.highlight
-                      ? 'bg-gradient-to-r from-[#1a2744] to-[#0f1a2e] text-white text-center shadow-md'
-                      : 'text-[#1a2744] hover:bg-[#1a2744]/5'
-                  }`}
+                  className="px-4 py-3 rounded-xl text-sm font-medium text-[#1a2744] hover:bg-[#1a2744]/5 transition-all"
                 >
                   {link.label}
                 </Link>
